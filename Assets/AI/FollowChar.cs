@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +15,11 @@ public class FollowChar : MonoBehaviour
     
     public Vector3 targetPos = Vector3.zero;
 
-    public float lerpSpeed = 1.0f;
+    public float xSpeed = 1.0f;
+    public float ySpeed = 1.0f;
+
+    public float start = 0;
+    public float now = 0;
 
     private void Awake()
     {
@@ -30,7 +36,16 @@ public class FollowChar : MonoBehaviour
         {
             TargetPlayer = player2;
         }
+
+        start = Time.time;
     }
+
+    /// <summary>
+    /// 0 = waiting, 1 = moving, 2= attacking, 3 = stunned
+    /// </summary>
+    public int state = 0;
+    [SerializeField] private float delayTimer = 2.0f;
+    [SerializeField] private float floatingDistantce = 1.5f;
 
     private void Update()
     {
@@ -43,20 +58,64 @@ public class FollowChar : MonoBehaviour
             TargetPlayer = player2;
         }
 
-        float step = lerpSpeed * Time.deltaTime;
+        now += Time.deltaTime;
 
-        if (((TargetPlayer.transform.position + new Vector3(-1, 0, 0)) / 2).magnitude < (((TargetPlayer.transform.position + new Vector3(1, 0, 0))) / 2).magnitude)
+        if (state == 0) 
         {
-            targetPos = (TargetPlayer.transform.position + new Vector3(-1, 0, 0));
+            if (now > delayTimer)
+            {
+                Vector2 pos = this.transform.position;
+                Vector2 pos2 = TargetPlayer.transform.position;
+
+                Debug.Log($"{Vector2.Distance(new Vector2(pos.x, pos.y), pos2)}");
+                if (Vector2.Distance(new Vector2(pos.x,pos.y),pos2) >= floatingDistantce+0.1f)
+                {
+                    state = 1;
+                    now = 0;
+                }
+                else 
+                {
+                    Debug.Log("bal");
+                    state = 2;
+                    now = 0;
+                }
+
+            }
         }
-        else
+        if (state == 1)
         {
+            float xStep = xSpeed * Time.deltaTime;
+            float yStep = ySpeed * Time.deltaTime;
 
-            targetPos = (TargetPlayer.transform.position + new Vector3(1, 0, 0));
+            if (((TargetPlayer.transform.position + new Vector3(-floatingDistantce, 0, 0)) / 2).magnitude < (((TargetPlayer.transform.position + new Vector3(floatingDistantce, 0, 0))) / 2).magnitude)
+            {
+                targetPos = (TargetPlayer.transform.position + new Vector3(-floatingDistantce, 0, 0));
+            }
+            else
+            {
+                targetPos = (TargetPlayer.transform.position + new Vector3(floatingDistantce, 0, 0));
+            }
 
+            Vector3 temp = Vector3.zero;
+            temp.y = Vector3.MoveTowards(new Vector3(0, this.transform.position.y, 0), new Vector3(0, targetPos.y, 0), yStep).y;
+            temp.x = Vector3.MoveTowards(new Vector3(this.transform.position.x, 0, 0), new Vector3(targetPos.x, 0, 0), xStep).x;
+            temp.z = 0;
+            this.transform.position = temp;
+
+            if (targetPos.x == this.transform.position.x && targetPos.y == this.transform.position.y) 
+            {
+                now = 0;
+                state = 0;
+            }
         }
-        // Use Vector3.MoveTowards to move towards the target position at a constant speed.
-        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPos, step);
+        if (state == 2) 
+        {
+            Debug.Log("dancing, walking re agearean ");
+            state = 0;
+            now = 0;
+        }
+
+
     }
 }
 

@@ -82,8 +82,30 @@
                 },
                 {
                     "name": "",
+                    "id": "14be5105-391d-448e-a628-62b4fe9505ef",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "404bd39f-97e8-4a93-bf93-54436a6c6e77",
                     "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "025ffa12-30fe-4d9e-ba79-44d8b76faca9",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
