@@ -20,11 +20,12 @@ public class Char_Controller : MonoBehaviour
 
     private PlayerInput playerInput;
 
-    Vector2 moveDirection = new Vector2();
+    public Vector2 moveDirection = new Vector2();
 
-    [SerializeField] private InputActionReference Move, Sprint, Punch;
+    [SerializeField] private InputActionReference Move, Sprint, Punch, HeavyPunch;
 
-    public GameObject hitBox;
+    public GameObject punchBox;
+    public GameObject heavyPunchBox;
 
     private void Awake()
     {
@@ -33,21 +34,35 @@ public class Char_Controller : MonoBehaviour
     }
 
 
-    private float attackTimer = 0.0f;
-    [SerializeField] private float attackDelay = 0.25f;
+    private float punchTimer = 0.0f;
+    private float heavyPunchTimer = 0.0f;
+    [SerializeField] private float punchDelay = 0.1f;
+    [SerializeField] private float heavyPunchDelay = 0.3f;
     public bool attacking = false;
+
+    public int currentDirection = 1; // 1 for right, -1 for left
+    public float newDirection = 0.1f;
 
     private void Update()
     {
-        moveDirection = Move.action.ReadValue<Vector2>();
-        
+        if(punchTimer>punchDelay && heavyPunchDelay<heavyPunchTimer) moveDirection = Move.action.ReadValue<Vector2>();
+
+        // Check if there's a change in input direction
+        newDirection = moveDirection.x;
+
+        if (newDirection > 0.1f) currentDirection = 1;
+        if (newDirection < -0.1f) currentDirection = -1;
+
+        // Set the local scale based on the currentDirection
+        this.gameObject.transform.localScale = new Vector3(currentDirection * 2.4f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+
         if (Sprint.action.IsPressed())
         {
             if (sprintTimer >= sprintDelay)
             {
                 sprinting = true;
             }
-            else 
+            else
             {
                 sprintTimer += Time.deltaTime;
             }
@@ -57,19 +72,35 @@ public class Char_Controller : MonoBehaviour
             sprinting = false;
             sprintTimer = 0.0f;
         }
-        if (Punch.action.IsPressed() && !Sprint.action.IsPressed()) 
+        if (!Sprint.action.IsPressed() && Move.action.ReadValue<Vector2>() == Vector2.zero)
         {
-            if (!attacking && attackTimer > attackDelay)
+            if (Punch.action.IsPressed())
             {
-                Debug.Log("fuck");
-                attackTimer = 0.0f;
-                hitBox.SetActive(true);
+                if (!attacking && punchTimer > punchDelay)
+                {
+                    Debug.Log("fuck");
+                    punchTimer = 0.0f;
+                    punchBox.SetActive(true);
+                    attacking = true;
+                }
+            }
+            else if (HeavyPunch.action.IsPressed())
+            {
+                if (!attacking && heavyPunchTimer > heavyPunchDelay)
+                {
+                    Debug.Log("Shit");
+                    heavyPunchTimer = 0.0f;
+                    heavyPunchBox.SetActive(true);
+                    attacking = true;
+                }
+            }
+            else
+            {
+                attacking = false;
             }
         }
-        else
-        {
-            attackTimer += Time.deltaTime;
-        }
+        punchTimer += Time.deltaTime;
+        heavyPunchTimer += Time.deltaTime;
     }
 
     void FixedUpdate()

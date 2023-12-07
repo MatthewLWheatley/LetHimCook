@@ -17,6 +17,7 @@ public class CameraGib : MonoBehaviour
     public float lockPos = 0f;
 
     public float ylock = -1.1f;
+    public float xlock = 14.1f;
 
     public float smoothTime = 0.3f;
 
@@ -47,6 +48,7 @@ public class CameraGib : MonoBehaviour
         lockPos = targetPos.x;
         targetPos.z = -1;
         if (targetPos.y < ylock) targetPos.y = ylock;
+        if (targetPos.x < xlock) targetPos.x = xlock;
 
         this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPos, ref velocity, smoothTime);
     }
