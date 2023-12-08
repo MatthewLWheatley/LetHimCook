@@ -7,6 +7,9 @@ TagManager:
   - NextScene
   - floor
   - PlayerPunchBox
+  - PlayerKickBox
+  - PlayerHeavyKickBox
+  - PlayerHeavyPunchBox
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - Triggers
   - Camera
   - Enemy
-  - 
+  - HitBox
   - 
   - 
   - 

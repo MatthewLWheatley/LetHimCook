@@ -14,7 +14,7 @@ public class Char_Controller : MonoBehaviour
     public float walkSpeedY = 2.5f;
     public float sprintSpeedX = 6.5f;
     public float sprintSpeedY = 3.25f;
-    private float sprintTimer = 0.0f;
+    public float sprintTimer = 0.0f;
     public float sprintDelay = 0.75f;
     public bool sprinting = false;
 
@@ -22,10 +22,9 @@ public class Char_Controller : MonoBehaviour
 
     public Vector2 moveDirection = new Vector2();
 
-    [SerializeField] private InputActionReference Move, Sprint, Punch, HeavyPunch;
+    //[SerializeField] private InputActionReference Move, Sprint, Punch, HeavyPunch;
 
-    public GameObject punchBox;
-    public GameObject heavyPunchBox;
+    
 
     private void Awake()
     {
@@ -37,75 +36,180 @@ public class Char_Controller : MonoBehaviour
     private float punchTimer = 0.0f;
     private float heavyPunchTimer = 0.0f;
     [SerializeField] private float punchDelay = 0.1f;
-    [SerializeField] private float heavyPunchDelay = 0.3f;
+    [SerializeField] private float heavyPunchDelay = 0.75f;
+    public bool punching = false;
+    public bool heavyPunching = false;
+    public GameObject punchBox;
+    public GameObject heavyPunchBox;
+    private float kickTimer = 0.0f;
+    private float heavyKickTimer = 0.0f;
+    [SerializeField] private float kickDelay = 0.2f;
+    [SerializeField] private float heavyKickDelay = 0.8f;
+    public bool kicking = false;
+    public bool heavyKicking = false;
+    public GameObject kickBox;
+    public GameObject heavyKickBox;
+
     public bool attacking = false;
 
     public int currentDirection = 1; // 1 for right, -1 for left
-    public float newDirection = 0.1f;
+    public Vector2 newDirection = new Vector2(0.1f,0);
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+         moveDirection = context.ReadValue<Vector2>();
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            // Sprint button is pressed
+            sprinting = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            // Sprint button is released
+            sprinting = false;
+        }
+    }
+
+    public void OnPunch(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+
+            punching = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            punching = false;
+        }
+    }
+
+    public void OnHeavyPunch(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            heavyPunching = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            heavyPunching = false;
+        }
+    }
+
+    public void OnKick(InputAction.CallbackContext context) 
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            kicking = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            kicking = false;
+        }
+    }
+    
+    public void OnHeavyKick(InputAction.CallbackContext context) 
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            heavyKicking = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            heavyKicking = false;
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+
+    }
 
     private void Update()
     {
-        if(punchTimer>punchDelay && heavyPunchDelay<heavyPunchTimer) moveDirection = Move.action.ReadValue<Vector2>();
 
-        // Check if there's a change in input direction
-        newDirection = moveDirection.x;
 
-        if (newDirection > 0.1f) currentDirection = 1;
-        if (newDirection < -0.1f) currentDirection = -1;
+        if (heavyPunchTimer * 2 < heavyPunchDelay) newDirection = Vector2.zero;
+        else newDirection = moveDirection;
 
-        // Set the local scale based on the currentDirection
-        this.gameObject.transform.localScale = new Vector3(currentDirection * 2.4f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+        if (newDirection.x > 0.1f) currentDirection = 1;
+        if (newDirection.x < -0.1f) currentDirection = -1;
 
-        if (Sprint.action.IsPressed())
+            // Set the local scale based on the currentDirection
+            this.gameObject.transform.localScale = new Vector3(currentDirection * 2.4f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+
+        if (!sprinting && newDirection == Vector2.zero)
         {
-            if (sprintTimer >= sprintDelay)
-            {
-                sprinting = true;
-            }
-            else
-            {
-                sprintTimer += Time.deltaTime;
-            }
-        }
-        else
-        {
-            sprinting = false;
-            sprintTimer = 0.0f;
-        }
-        if (!Sprint.action.IsPressed() && Move.action.ReadValue<Vector2>() == Vector2.zero)
-        {
-            if (Punch.action.IsPressed())
+            if (punching)
             {
                 if (!attacking && punchTimer > punchDelay)
                 {
-                    Debug.Log("fuck");
                     punchTimer = 0.0f;
                     punchBox.SetActive(true);
                     attacking = true;
+                    punching = true;
                 }
             }
-            else if (HeavyPunch.action.IsPressed())
+            else if (heavyPunching)
             {
                 if (!attacking && heavyPunchTimer > heavyPunchDelay)
                 {
-                    Debug.Log("Shit");
                     heavyPunchTimer = 0.0f;
                     heavyPunchBox.SetActive(true);
                     attacking = true;
+                    heavyPunching = false;
+                }
+            }
+            else if (kicking)
+            {
+                if (!attacking && kickTimer > kickDelay)
+                {
+                    kickTimer = 0.0f;
+                    kickBox.SetActive(true);
+                    attacking = true;
+                    kicking = false;
+                }
+            }
+            else if (heavyKicking)
+            {
+                if (!attacking && heavyKickTimer > heavyKickDelay)
+                {
+                    heavyKickTimer = 0.0f;
+                    heavyKickBox.SetActive(true);
+                    attacking = true;
+                    heavyKicking = false;
                 }
             }
             else
             {
                 attacking = false;
+                punching = false;
+                heavyPunching = false;
+                kicking = false;
+                heavyKicking = false;
             }
         }
         punchTimer += Time.deltaTime;
         heavyPunchTimer += Time.deltaTime;
+        kickTimer += Time.deltaTime;
+        heavyKickTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
     {
-        if(!sprinting)rb.velocity = new Vector2(moveDirection.x * walkSpeedX, moveDirection.y * walkSpeedY);
-        else rb.velocity = new Vector2(moveDirection.x * sprintSpeedX, moveDirection.y * sprintSpeedY);
+        if (!sprinting) rb.velocity = new Vector2(newDirection.x * walkSpeedX, newDirection.y * walkSpeedY);
+
+        if (sprinting && sprintDelay < sprintTimer) rb.velocity = new Vector2(newDirection.x * sprintSpeedX, newDirection.y * sprintSpeedY);
+        else if (sprinting)
+        {
+            sprintTimer += Time.deltaTime;
+        }
+        if(!sprinting)
+        {
+            sprintTimer = 0;
+        }
     }
 }

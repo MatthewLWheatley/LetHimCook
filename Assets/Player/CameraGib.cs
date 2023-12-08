@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class CameraGib : MonoBehaviour
 {
@@ -25,31 +24,52 @@ public class CameraGib : MonoBehaviour
 
     private void Awake()
     {
-        
-        if (!player2.activeSelf) 
-        {
-            player2 = player1;
+        var players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length > 0) 
+        { 
+            player1 = players[0];
+            if (players.Length > 1)
+            {
+            player2 = players[1];
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (player2.IsDestroyed())
+        if (player1 == null)
         {
-            player2 = player1;
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            if (players.Length > 0)
+            {
+                player1 = players[0];
+            }
         }
-        if (player1.IsDestroyed())
+        if (player2 == null || player1 == player2)
         {
-            player1 = player2;
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            if (players.Length > 1)
+            {
+                player2 = players[1];
+            }
+            else 
+            {
+                player2 = player1;
+            }
         }
-        Vector3 targetPos = (player1.transform.position + player2.transform.position) / 2;
-        
-        if (xLock) targetPos.x = lockPos;
-        lockPos = targetPos.x;
-        targetPos.z = -1;
-        if (targetPos.y < ylock) targetPos.y = ylock;
-        if (targetPos.x < xlock) targetPos.x = xlock;
 
-        this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPos, ref velocity, smoothTime);
+        if (player1 != null && !player2 != null)
+        {
+
+            Vector3 targetPos = (player1.transform.position + player2.transform.position) / 2;
+
+            if (xLock) targetPos.x = lockPos;
+            lockPos = targetPos.x;
+            targetPos.z = -1;
+            if (targetPos.y < ylock) targetPos.y = ylock;
+            if (targetPos.x < xlock) targetPos.x = xlock;
+
+            this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPos, ref velocity, smoothTime);
+        }
     }
 }

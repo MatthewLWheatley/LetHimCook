@@ -45,29 +45,48 @@ public class AIProps : MonoBehaviour
         //Debug.Log(collision.tag);
         if (collision.gameObject.CompareTag("PlayerPunchBox"))
         {
-            if (collision.gameObject.name == "PunchBox")
-            {
-                Debug.Log("small");
-                health -= 1.0f;
-                Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
-                //rb.AddForce(-hitDir*knockbackPower,ForceMode2D.Impulse);
-                takingDamage = true;
-                this.GetComponent<FollowChar>().timer = 0;
-            }
-            if (collision.gameObject.name == "HeavyPunchBox") 
-            {
-                Debug.Log("heavy");
-                health -= 69.0f;
-                Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
-                //rb.AddForce(-hitDir*knockbackPower,ForceMode2D.Impulse);
-                takingDamage = true;
-                this.GetComponent<FollowChar>().timer = 0;
-            }
+
+            Debug.Log("punch");
+            health -= 1.0f;
+            Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
+            knockbackPower = .3f;
+            rb.AddForce(-hitDir * knockbackPower);
+            takingDamage = true;
+            this.GetComponent<FollowChar>().timer = 0;
+        }
+        if (collision.gameObject.CompareTag("PlayerHeavyPunchBox"))
+        {
+            Debug.Log("heavypunch");
+            health -= 3.0f;
+            Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
+            knockbackPower = .7f;
+            rb.AddForce(-hitDir * knockbackPower);
+            takingDamage = true;
+            this.GetComponent<FollowChar>().timer = 0;
+        }
+        if (collision.gameObject.CompareTag("PlayerKickBox"))
+        {
+            Debug.Log("kick");
+            health -= 1.2f;
+            Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
+            knockbackPower = 1.5f;
+            rb.AddForce(-hitDir * knockbackPower);
+            takingDamage = true;
+            this.GetComponent<FollowChar>().timer = 0;
+        }
+        if (collision.gameObject.CompareTag("PlayerHeavyKickBox"))
+        {
+            Debug.Log("heavykick");
+            health -= 3.5f;
+            Vector2 hitDir = (collision.transform.position - this.transform.position).normalized;
+            knockbackPower = .7f;
+            rb.AddForce(-hitDir * knockbackPower);
+            takingDamage = true;
+            this.GetComponent<FollowChar>().timer = 0;
         }
         if (health <= 0.0f)
         {
             this.gameObject.SetActive(false);
         }
-
     }
 }
