@@ -1471,6 +1471,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+--- !u!1 &1361419518 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6442043999192825926, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+  m_PrefabInstance: {fileID: 1361419517}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1414584063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,7 +1901,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420028}
   waveCount: 0
-  Waves: 000000000000000000000000
+  Enemies:
+  - {fileID: 2934703345997567391}
+  - {fileID: 1680405788}
+  - {fileID: 1361419518}
+  Waves: 
   currentWave: 0
 --- !u!212 &1524295452
 SpriteRenderer:
@@ -2343,6 +2352,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+--- !u!1 &1680405788 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6442043999192825926, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+  m_PrefabInstance: {fileID: 1680405787}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1689243920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2280301597812781276, guid: 6b454577d422de243a0ec27fdbd4d526, type: 3}
@@ -2875,3 +2889,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+--- !u!1 &2934703345997567391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6442043999192825926, guid: 5cc34dc7c9fcef34e825240eb59905eb, type: 3}
+  m_PrefabInstance: {fileID: 2934703345997567390}
+  m_PrefabAsset: {fileID: 0}

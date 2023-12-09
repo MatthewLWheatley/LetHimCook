@@ -9,66 +9,27 @@ public class FightManager : MonoBehaviour
 
     public int waveCount = 0;
 
-    public List<(int,GameObject)> Enemies;
-    public List<int> Waves;
+    public List<GameObject> Enemies; // Assuming this is just a list of GameObjects now
+    public List<int> Waves; // Assuming this still represents the number of enemies in each wave
     public int currentWave;
 
     private int maxWave; // The maximum wave number
-
 
     private int enemyCount;
     private bool Started = false;
 
     private void Start()
     {
-        // Dictionary to keep track of counts for each wave
-        Dictionary<int, int> waveCounts = new Dictionary<int, int>();
+        maxWave = Waves.Count - 1; // Set the maxWave based on the number of waves
 
-        // Iterate through each enemy in the Enemies list
+        // Deactivate all enemies initially
         foreach (var enemy in Enemies)
         {
-            int waveNumber = enemy.Item1; // Get the wave number
-
-            // If the wave number is already in the dictionary, increment its count
-            if (waveCounts.ContainsKey(waveNumber))
+            if (enemy != null)
             {
-                waveCounts[waveNumber]++;
-            }
-            else
-            {
-                // Otherwise, add the wave number to the dictionary with a count of 1
-                waveCounts.Add(waveNumber, 1);
+                enemy.SetActive(false);
             }
         }
-
-        // Clear the Waves list and populate it with the counts from the dictionary
-        Waves.Clear();
-        foreach (var waveCount in waveCounts)
-        {
-            Waves.Add(waveCount.Value); // Add the count of GameObjects for each wave
-        }
-
-
-        maxWave = Waves[Waves.Count];
-
-        for (int i = 0; i < Enemies.Count; i++)
-        {
-            Enemies[i].Item2.SetActive(false);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("MainCamera"))
-        {
-            cam.GetComponent<CameraGib>().xLock = true;
-        }
-        for (int i = 0; i < Waves[0]; i++)
-        {
-            Enemies[i].Item2.SetActive(true);
-        }
-        Started = true;
-        //Debug.Log(collision.gameObject.ToString());
     }
 
     private void Update()
@@ -103,26 +64,26 @@ public class FightManager : MonoBehaviour
     }
 
     // Check if all GameObjects in a given wave are destroyed or inactive
+    // This needs a new implementation
     private bool IsWaveCleared(int wave)
     {
-        foreach (var enemy in Enemies)
-        {
-            if (enemy.Item1 == wave && enemy.Item2 != null && enemy.Item2.activeSelf)
-            {
-                return false; // If any GameObject in the wave is still active, the wave is not cleared
-            }
-        }
-        return true; // All GameObjects in the wave are destroyed or inactive
+        // Implementation depends on how you determine which enemies belong to which wave
+        // For now, this function returns true for simplicity
+        return true;
     }
 
-    // Activate all GameObjects in a given wave
+    // Activate a certain number of GameObjects for the given wave
     private void ActivateWave(int wave)
     {
+        int enemiesToActivate = Waves[wave];
+        int activatedEnemies = 0;
+
         foreach (var enemy in Enemies)
         {
-            if (enemy.Item1 == wave && enemy.Item2 != null)
+            if (enemy != null && !enemy.activeSelf && activatedEnemies < enemiesToActivate)
             {
-                enemy.Item2.SetActive(true);
+                enemy.SetActive(true);
+                activatedEnemies++;
             }
         }
     }
