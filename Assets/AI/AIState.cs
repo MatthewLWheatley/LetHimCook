@@ -48,17 +48,22 @@ public class FollowChar : MonoBehaviour
     {
         if (player1 != null)
         {
+            TargetPlayer = player1;
             if (player2 == null)
             {
                 player2 = player1;
+
             }
-            if (((player1.transform.position - this.transform.position) / 2).magnitude < ((player2.transform.position - this.transform.position) / 2).magnitude)
+            if (player1 != player2) 
             {
-                TargetPlayer = player1;
-            }
-            else
-            {
-                TargetPlayer = player2;
+                if (((player1.transform.position - this.transform.position) / 2).magnitude > ((player2.transform.position - this.transform.position) / 2).magnitude)
+                {
+                    TargetPlayer = player1;
+                }
+                else
+                {
+                    TargetPlayer = player2;
+                }
             }
 
             timer += Time.deltaTime;
@@ -113,7 +118,10 @@ public class FollowChar : MonoBehaviour
             }
             if (state == 2)
             {
-                //Debug.Log("dancing, walking re agearean ");
+                Debug.Log("Attacking ");
+
+
+
                 state = 0;
                 timer = 0;
             }

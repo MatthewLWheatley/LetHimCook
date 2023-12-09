@@ -32,17 +32,15 @@ public class Char_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    public float currentDelay  = 0.0f;
+    public float Timer = 0.0f;
 
-    private float punchTimer = 0.0f;
-    private float heavyPunchTimer = 0.0f;
     [SerializeField] private float punchDelay = 0.1f;
     [SerializeField] private float heavyPunchDelay = 0.75f;
     public bool punching = false;
     public bool heavyPunching = false;
     public GameObject punchBox;
     public GameObject heavyPunchBox;
-    private float kickTimer = 0.0f;
-    private float heavyKickTimer = 0.0f;
     [SerializeField] private float kickDelay = 0.2f;
     [SerializeField] private float heavyKickDelay = 0.8f;
     public bool kicking = false;
@@ -132,7 +130,7 @@ public class Char_Controller : MonoBehaviour
     {
 
 
-        if (heavyPunchTimer * 2 < heavyPunchDelay) newDirection = Vector2.zero;
+        if (Timer * 2 < currentDelay) newDirection = Vector2.zero;
         else newDirection = moveDirection;
 
         if (newDirection.x > 0.1f) currentDirection = 1;
@@ -145,9 +143,10 @@ public class Char_Controller : MonoBehaviour
         {
             if (punching)
             {
-                if (!attacking && punchTimer > punchDelay)
+                if (!attacking && Timer > currentDelay)
                 {
-                    punchTimer = 0.0f;
+                    Timer = 0.0f;
+                    currentDelay = punchDelay;
                     punchBox.SetActive(true);
                     attacking = true;
                     punching = true;
@@ -155,9 +154,10 @@ public class Char_Controller : MonoBehaviour
             }
             else if (heavyPunching)
             {
-                if (!attacking && heavyPunchTimer > heavyPunchDelay)
+                if (!attacking && Timer > currentDelay)
                 {
-                    heavyPunchTimer = 0.0f;
+                    Timer = 0.0f;
+                    currentDelay = heavyPunchDelay;
                     heavyPunchBox.SetActive(true);
                     attacking = true;
                     heavyPunching = false;
@@ -165,9 +165,10 @@ public class Char_Controller : MonoBehaviour
             }
             else if (kicking)
             {
-                if (!attacking && kickTimer > kickDelay)
+                if (!attacking && Timer > currentDelay)
                 {
-                    kickTimer = 0.0f;
+                    Timer = 0.0f;
+                    currentDelay = kickDelay;
                     kickBox.SetActive(true);
                     attacking = true;
                     kicking = false;
@@ -175,9 +176,10 @@ public class Char_Controller : MonoBehaviour
             }
             else if (heavyKicking)
             {
-                if (!attacking && heavyKickTimer > heavyKickDelay)
+                if (!attacking && Timer > currentDelay)
                 {
-                    heavyKickTimer = 0.0f;
+                    Timer = 0.0f;
+                    currentDelay = heavyKickDelay;
                     heavyKickBox.SetActive(true);
                     attacking = true;
                     heavyKicking = false;
@@ -192,12 +194,9 @@ public class Char_Controller : MonoBehaviour
                 heavyKicking = false;
             }
         }
-        punchTimer += Time.deltaTime;
-        heavyPunchTimer += Time.deltaTime;
-        kickTimer += Time.deltaTime;
-        heavyKickTimer += Time.deltaTime;
+        Timer += Time.deltaTime;
     }
-
+        
     void FixedUpdate()
     {
         if (!sprinting) rb.velocity = new Vector2(newDirection.x * walkSpeedX, newDirection.y * walkSpeedY);

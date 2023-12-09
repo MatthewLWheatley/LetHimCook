@@ -58,7 +58,7 @@ public class CameraGib : MonoBehaviour
             }
         }
 
-        if (player1 != null && !player2 != null)
+        if (player1 != null && player2 != null)
         {
 
             Vector3 targetPos = (player1.transform.position + player2.transform.position) / 2;
