@@ -67,6 +67,7 @@
     <Compile Include="Assets\Player\scaleBoarder.cs" />
     <Compile Include="Assets\Player\PlayerHitBox.cs" />
     <Compile Include="Assets\AI\AIProps.cs" />
+    <Compile Include="Assets\EnemyHitReg.cs" />
     <Compile Include="Assets\Player\PlayerManager.cs" />
   </ItemGroup>
   <ItemGroup>

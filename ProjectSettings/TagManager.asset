@@ -11,6 +11,7 @@ TagManager:
   - PlayerHeavyKickBox
   - PlayerHeavyPunchBox
   - EnemyPunchBox
+  - Enemy
   layers:
   - Default
   - TransparentFX

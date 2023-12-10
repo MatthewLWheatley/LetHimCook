@@ -9,6 +9,13 @@ public class FollowChar : MonoBehaviour
 {
     [SerializeField] private GameObject GameManager;
 
+    /// <summary>
+    /// 0 = waiting, 1 = moving, 2= attacking, 3 = stunned
+    /// </summary>
+    public int state = 0;
+    [SerializeField] private float delayTimer = 2.0f;
+    [SerializeField] private float floatingDistantce = 1.5f;
+
     private GameObject player1;
     private GameObject player2;
     private GameObject TargetPlayer;
@@ -20,34 +27,30 @@ public class FollowChar : MonoBehaviour
 
     public float timer = 0;
 
-    private void Awake()
+    private void Start()
     {
+        Debug.Log("fuck");
         GameObject[] players;
-        players =GameObject.FindGameObjectsWithTag("Player");
-        if(players.Length > 0) player1 = players[0];
+        players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length > 0) player1 = players[0];
         if (players.Length > 1) player2 = players[1];
-        if(player1 != null)
-        if (((player1.transform.position - this.transform.position) / 2).magnitude < ((player2.transform.position - this.transform.position) / 2).magnitude)
-        {
-            TargetPlayer = player1;
-        }
-        else
-        {
-            TargetPlayer = player2;
-        }
+        if (player1 != null)
+            if (((player1.transform.position - this.transform.position) / 2).magnitude < ((player2.transform.position - this.transform.position) / 2).magnitude)
+            {
+                TargetPlayer = player1;
+            }
+            else
+            {
+                TargetPlayer = player2;
+            }
     }
 
-    /// <summary>
-    /// 0 = waiting, 1 = moving, 2= attacking, 3 = stunned
-    /// </summary>
-    public int state = 0;
-    [SerializeField] private float delayTimer = 2.0f;
-    [SerializeField] private float floatingDistantce = 1.5f;
 
     private void Update()
     {
         if (player1 != null)
         {
+            Debug.Log("test");
             TargetPlayer = player1;
             if (player2 == null)
             {
@@ -126,6 +129,7 @@ public class FollowChar : MonoBehaviour
                 timer = 0;
             }
         }
+
     }
 }
 

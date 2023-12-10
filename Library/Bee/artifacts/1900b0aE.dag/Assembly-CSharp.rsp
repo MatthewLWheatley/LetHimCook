@@ -389,6 +389,7 @@
 -analyzer:"C:/2022.3.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/AI/AIProps.cs"
 "Assets/AI/AIState.cs"
+"Assets/EnemyHitReg.cs"
 "Assets/GameManager.cs"
 "Assets/Player/CameraGib.cs"
 "Assets/Player/Char_Controller.cs"

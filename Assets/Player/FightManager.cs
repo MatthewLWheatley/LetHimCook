@@ -55,7 +55,7 @@ public class FightManager : MonoBehaviour
             {
                 if (i < Enemies.Count && Enemies[i] != null)
                 {
-                    Enemies[i].SetActive(true);
+                    Enemies[i].gameObject.SetActive(true);
                 }
             }
 
