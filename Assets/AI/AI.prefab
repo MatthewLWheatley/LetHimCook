@@ -451,6 +451,6 @@ MonoBehaviour:
   followCharTimer: 0
   state: 0
   delayTimer: 2
-  floatingDistantce: 1.5
+  floatingDistantce: 0.75
   attackInterval: 0.8
-  attackDuration: 0.1
+  attackDuration: 0.05

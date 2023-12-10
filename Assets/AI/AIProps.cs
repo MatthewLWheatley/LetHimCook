@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Switch;
 using UnityEngine.Rendering.VirtualTexturing;
 
 public class AIProps : MonoBehaviour
@@ -109,104 +110,113 @@ public class AIProps : MonoBehaviour
         FindPlayers();
 
         followCharTimer += Time.deltaTime;
-
-        if (state == 0)
+        switch (state)
         {
-            if (followCharTimer > delayTimer)
-            {
-                Vector2 pos = this.transform.position;
-                Vector2 pos2 = TargetPlayer.transform.position;
-
-                //Debug.Log($"{Vector2.Distance(new Vector2(pos.x, pos.y), pos2)}");
-                if (Vector2.Distance(new Vector2(pos.x, pos.y), pos2) >= floatingDistantce + 0.1f)
+            case 0:
+                if (followCharTimer > delayTimer)
                 {
-                    state = 1;
+                    Vector2 pos = this.transform.position;
+                    Vector2 pos2 = TargetPlayer.transform.position;
+
+                    //Debug.Log($"{Vector2.Distance(new Vector2(pos.x, pos.y), pos2)}");
+                    if (Vector2.Distance(new Vector2(pos.x, pos.y), pos2) >= floatingDistantce + 0.1f)
+                    {
+                        state = 1;
+                        followCharTimer = 0;
+                    }
+                    else
+                    {
+                        //Debug.Log("bal");
+                        state = 2;
+                        followCharTimer = 0;
+                    }
+                }
+                break;
+            case 1:
+                float xStep = xSpeed * Time.deltaTime;
+                float yStep = ySpeed * Time.deltaTime;
+
+                Vector3 offset = (this.transform.position.x < TargetPlayer.transform.position.x) ? new Vector3(-floatingDistantce, 0, 0) : new Vector3(floatingDistantce, 0, 0);
+                targetPos = TargetPlayer.transform.position + offset;
+
+                // Add randomness to the y-coordinate of the target position
+                float randomYOffset = Random.Range(-randomYRange, randomYRange);
+                targetPos.y += randomYOffset;
+
+                Vector3 temp = Vector3.zero;
+                temp.y = Vector3.MoveTowards(new Vector3(0, this.transform.position.y, 0), new Vector3(0, targetPos.y, 0), yStep).y;
+                temp.x = Vector3.MoveTowards(new Vector3(this.transform.position.x, 0, 0), new Vector3(targetPos.x, 0, 0), xStep).x;
+                temp.z = 0;
+
+                float distanceToTarget = Vector3.Distance(this.transform.position, targetPos);
+
+                if (distanceToTarget <= 0.5f)
+                {
+                    // Stop movement by not updating the position
                     followCharTimer = 0;
+                    state = 0;
                 }
                 else
                 {
-                    //Debug.Log("bal");
-                    state = 2;
-                    followCharTimer = 0;
+                    this.transform.position = temp;
                 }
-            }
-        }
-        if (state == 1)
-        {
-            float xStep = xSpeed * Time.deltaTime;
-            float yStep = ySpeed * Time.deltaTime;
-
-            Vector3 offset = (this.transform.position.x < TargetPlayer.transform.position.x) ? new Vector3(-floatingDistantce, 0, 0) : new Vector3(floatingDistantce, 0, 0);
-            targetPos = TargetPlayer.transform.position + offset;
-
-            // Add randomness to the y-coordinate of the target position
-            float randomYOffset = Random.Range(-randomYRange, randomYRange);
-            targetPos.y += randomYOffset;
-
-            Vector3 temp = Vector3.zero;
-            temp.y = Vector3.MoveTowards(new Vector3(0, this.transform.position.y, 0), new Vector3(0, targetPos.y, 0), yStep).y;
-            temp.x = Vector3.MoveTowards(new Vector3(this.transform.position.x, 0, 0), new Vector3(targetPos.x, 0, 0), xStep).x;
-            temp.z = 0;
-
-            float distanceToTarget = Vector3.Distance(this.transform.position, targetPos);
-
-            if (distanceToTarget <= 0.5f)
-            {
-                // Stop movement by not updating the position
-                followCharTimer = 0;
-                state = 0;
-            }
-            else 
-            {
-                this.transform.position = temp;
-            }
 
 
-            Vector3 currentPosition = myTransform.position;
+                Vector3 currentPosition = myTransform.position;
 
-            // Check if the GameObject has moved along the x-axis
-            if (currentPosition.x != lastPosition.x)
-            {
-                // Determine the direction of movement
-                float direction = Mathf.Sign(currentPosition.x - lastPosition.x);
+                // Check if the GameObject has moved along the x-axis
+                if (currentPosition.x != lastPosition.x)
+                {
+                    // Determine the direction of movement
+                    float direction = Mathf.Sign(currentPosition.x - lastPosition.x);
 
-                // Flip the GameObject by setting the x component of the local scale
-                myTransform.localScale = new Vector3(direction * Mathf.Abs(myTransform.localScale.x), myTransform.localScale.y, myTransform.localScale.z);
-            }
+                    // Flip the GameObject by setting the x component of the local scale
+                    myTransform.localScale = new Vector3(direction * Mathf.Abs(myTransform.localScale.x), myTransform.localScale.y, myTransform.localScale.z);
+                }
 
-            // Update the last position for the next frame
-            lastPosition = currentPosition;
-        }
-        if (state == 2)
-        {
-            attackTimer += Time.deltaTime;
+                // Update the last position for the next frame
+                lastPosition = currentPosition;
 
-            if (!isAttacking && attackTimer >= attackInterval)
-            {
-                // Start attacking
-                Debug.Log("Attacking");
-                isAttacking = true;
-                attackTimer = 0.0f;
+                break;
+            case 2:
+                attackTimer += Time.deltaTime;
 
-                // Activate punch boxes here
-                PunchBox.gameObject.SetActive(true);
-            }
+                if (!isAttacking && attackTimer >= attackInterval)
+                {
+                    // Start attacking
+                    Debug.Log("Attacking");
+                    isAttacking = true;
+                    attackTimer = 0.0f;
 
-            if (isAttacking && attackTimer >= attackDuration)
-            {
-                // Stop attacking
-                isAttacking = false;
-                attackTimer = 0.0f;
+                    // Activate punch boxes here
+                    PunchBox.gameObject.SetActive(true);
+                }
+                if (isAttacking && attackTimer >= attackDuration)
+                {
+                    // Stop attacking
+                    isAttacking = false;
+                    attackTimer = 0.0f;
 
-                // Deactivate punch boxes here
-                PunchBox.gameObject.SetActive(false);
+                    // Deactivate punch boxes here
+                    PunchBox.gameObject.SetActive(false);
 
-                // Reset follow character timer
-                followCharTimer = 0;
+                    // Calculate distance from the target player
+                    float distanceTTarget = Vector2.Distance(transform.position, TargetPlayer.transform.position);
 
-                // Optionally, change state here
-                state = 0;
-            }
+                    // Check if distance is less than floating distance
+                    if (distanceTTarget < floatingDistantce)
+                    {
+                        // Keep attacking state
+                        state = 2;
+                        followCharTimer = 0; // Reset timer if you want to immediately reevaluate attacking
+                    }
+                    else
+                    {
+                        // Switch back to state 0
+                        state = 0;
+                    }
+                }
+                    break;
         }
     }
 
