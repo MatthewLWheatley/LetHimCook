@@ -221,8 +221,8 @@
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\SkeletonTool\SkeletonStyles.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\GenerateGeometryTool.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\UpgradeTools\AnimClipUpgrader.cs" />
-    <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\SkinningCache\MeshPreviewCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\SkeletonTool\SkeletonToolView.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\SkinningCache\MeshPreviewCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SpriteLib\SpriteLibraryPropertyString.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SpriteSkin\BoneEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation@9.0.3\Editor\SkinningModule\IMGUI\SkeletonView.cs" />

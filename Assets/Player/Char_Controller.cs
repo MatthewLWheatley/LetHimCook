@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement; // Include this namespace
 
 public class Char_Controller : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class Char_Controller : MonoBehaviour
 
     //[SerializeField] private InputActionReference Move, Sprint, Punch, HeavyPunch;
 
-    
+
 
     private void Awake()
     {
@@ -32,8 +33,17 @@ public class Char_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public float currentDelay  = 0.0f;
+    public float currentDelay = 0.0f;
     public float Timer = 0.0f;
+
+    public float health = 30.0f;
+    public float IFramesTimer = 0.0f;
+    public float IFramesDelay = 0.2f;
+
+    private bool takingDamage = false;
+    private float damageTimer = 0.0f;
+    [SerializeField] private float damageDuration = 0.1f;
+    [SerializeField] private Color damageColor = Color.red;
 
     [SerializeField] private float punchDelay = 0.1f;
     [SerializeField] private float heavyPunchDelay = 0.75f;
@@ -51,11 +61,11 @@ public class Char_Controller : MonoBehaviour
     public bool attacking = false;
 
     public int currentDirection = 1; // 1 for right, -1 for left
-    public Vector2 newDirection = new Vector2(0.1f,0);
+    public Vector2 newDirection = new Vector2(0.1f, 0);
 
     public void OnMove(InputAction.CallbackContext context)
     {
-         moveDirection = context.ReadValue<Vector2>();
+        moveDirection = context.ReadValue<Vector2>();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
@@ -97,7 +107,7 @@ public class Char_Controller : MonoBehaviour
         }
     }
 
-    public void OnKick(InputAction.CallbackContext context) 
+    public void OnKick(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
@@ -108,8 +118,8 @@ public class Char_Controller : MonoBehaviour
             kicking = false;
         }
     }
-    
-    public void OnHeavyKick(InputAction.CallbackContext context) 
+
+    public void OnHeavyKick(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
@@ -128,7 +138,16 @@ public class Char_Controller : MonoBehaviour
 
     private void Update()
     {
+        if (health <= 0)
+        {
+            // Get the current scene's name
+            string currentSceneName = SceneManager.GetActiveScene().name;
 
+            // Load the current scene again
+            SceneManager.LoadScene(currentSceneName);
+        }
+
+        damageflash();
 
         if (Timer * 2 < currentDelay) newDirection = Vector2.zero;
         else newDirection = moveDirection;
@@ -136,8 +155,8 @@ public class Char_Controller : MonoBehaviour
         if (newDirection.x > 0.1f) currentDirection = 1;
         if (newDirection.x < -0.1f) currentDirection = -1;
 
-            // Set the local scale based on the currentDirection
-            this.gameObject.transform.localScale = new Vector3(currentDirection * 2.4f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+        // Set the local scale based on the currentDirection
+        this.gameObject.transform.localScale = new Vector3(currentDirection * 2.4f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
 
         if (!sprinting && newDirection == Vector2.zero)
         {
@@ -195,8 +214,9 @@ public class Char_Controller : MonoBehaviour
             }
         }
         Timer += Time.deltaTime;
+        IFramesTimer += Time.deltaTime;
     }
-        
+
     void FixedUpdate()
     {
         if (!sprinting) rb.velocity = new Vector2(newDirection.x * walkSpeedX, newDirection.y * walkSpeedY);
@@ -206,9 +226,35 @@ public class Char_Controller : MonoBehaviour
         {
             sprintTimer += Time.deltaTime;
         }
-        if(!sprinting)
+        if (!sprinting)
         {
             sprintTimer = 0;
+        }
+    }
+
+    public void HitReg(Collider2D collision)
+    {
+        Debug.Log("soop");
+        Debug.Log(collision.gameObject.name);
+        Debug.Log(collision.gameObject.tag);
+        if (IFramesTimer >= IFramesDelay && collision.gameObject.CompareTag("EnemyPunchBox") && collision.gameObject.name == "AiPunchBox")
+        {
+            takingDamage = true;
+            health -= 1.0f;
+        }
+    }
+    private void damageflash()
+    {
+        if (takingDamage && damageTimer < damageDuration)
+        {
+            damageTimer += Time.deltaTime;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else
+        {
+            damageTimer = 0;
+            this.gameObject.GetComponent<SpriteRenderer>().color = damageColor;
+            takingDamage = false;
         }
     }
 }
