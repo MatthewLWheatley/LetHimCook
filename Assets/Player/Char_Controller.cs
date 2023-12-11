@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement; // Include this namespace
 
 public class Char_Controller : MonoBehaviour
 {
@@ -34,6 +35,15 @@ public class Char_Controller : MonoBehaviour
 
     public float currentDelay  = 0.0f;
     public float Timer = 0.0f;
+
+    public float health = 30.0f;
+    public float IFramesTimer = 0.0f;
+    public float IFramesDelay = 0.2f;
+
+    private bool takingDamage = false;
+    private float damageTimer = 0.0f;
+    [SerializeField] private float damageDuration = 0.1f;
+    [SerializeField] private Color damageColor = Color.red;
 
     [SerializeField] private float punchDelay = 0.1f;
     [SerializeField] private float heavyPunchDelay = 0.75f;
@@ -128,7 +138,16 @@ public class Char_Controller : MonoBehaviour
 
     private void Update()
     {
+        if (health <= 0) 
+        {
+            // Get the current scene's name
+            string currentSceneName = SceneManager.GetActiveScene().name;
 
+            // Load the current scene again
+            SceneManager.LoadScene(currentSceneName);
+        }
+
+        damageflash();
 
         if (Timer * 2 < currentDelay) newDirection = Vector2.zero;
         else newDirection = moveDirection;
@@ -195,6 +214,7 @@ public class Char_Controller : MonoBehaviour
             }
         }
         Timer += Time.deltaTime;
+        IFramesTimer += Time.deltaTime;
     }
         
     void FixedUpdate()
@@ -209,6 +229,32 @@ public class Char_Controller : MonoBehaviour
         if(!sprinting)
         {
             sprintTimer = 0;
+        }
+    }
+
+    public void HitReg(Collider2D collision) 
+    {
+        Debug.Log("soop");
+        Debug.Log(collision.gameObject.name);
+        Debug.Log(collision.gameObject.tag);
+        if (IFramesTimer >= IFramesDelay && collision.gameObject.CompareTag("EnemyPunchBox") && collision.gameObject.name == "AiPunchBox") 
+        {
+            takingDamage = true;
+            health -= 1.0f;
+        }
+    }
+    private void damageflash()
+    {
+        if (takingDamage && damageTimer < damageDuration)
+        {
+            damageTimer += Time.deltaTime;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else
+        {
+            damageTimer = 0;
+            this.gameObject.GetComponent<SpriteRenderer>().color = damageColor;
+            takingDamage = false;
         }
     }
 }

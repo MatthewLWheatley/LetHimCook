@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6565127119592581703}
   - component: {fileID: 6130076407373024369}
+  - component: {fileID: 2154680601156811680}
   m_Layer: 10
-  m_Name: PunchBox
-  m_TagString: Untagged
+  m_Name: AiPunchBox
+  m_TagString: EnemyPunchBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398569045171054718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5795, y: 0.091, z: 0}
+  m_LocalPosition: {x: 0.886, y: 0.107, z: 0}
   m_LocalScale: {x: 0.9644992, y: 0.2490952, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -84,6 +85,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2154680601156811680
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398569045171054718}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 439
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &3215815784408718182
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,21 +482,36 @@ MonoBehaviour:
   baseKnockBack: 0.5
   punchKnockBack: 0.3
   punchDamage: 2
+  punchStunTime: 0.25
   heavyPunchKnockBack: 1.2
   heavyPunchDamage: 5
+  HeavyPunchStunTime: 0.5
   kickKnockBack: 0.5
   kickDamage: 1.5
+  KickStunTime: 0.4
   heavyKickKnockBack: 2
   heavyKickDamage: 4
+  HeavyKickStunTime: 0.8
   knockBackDelay: 0.1
   knockBackStep: 0.25
-  Timer: 0.1
+  Timer: 1
+  stunTimer: 0
+  stunDelay: 0
   targetPos: {x: 0, y: 0, z: 0}
-  xSpeed: 1
-  ySpeed: 1
-  followCharTimer: 0
+  xSpeed: 5
+  ySpeed: 3
+  followCharTimer: 0.45
   state: 0
+<<<<<<< Updated upstream
   delayTimer: 2
   floatingDistantce: 1.5
   attackInterval: 0.8
   attackDuration: 0.1
+=======
+  delayTimer: 0.3
+  floatingDistantce: 1.25
+  attackInterval: 0.45
+  attackDuration: 0.05
+  floatingRegion: 0.25
+  allAIs: []
+>>>>>>> Stashed changes
