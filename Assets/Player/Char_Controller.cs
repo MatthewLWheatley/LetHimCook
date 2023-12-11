@@ -17,6 +17,7 @@ public class Char_Controller : MonoBehaviour
     public float sprintTimer = 0.0f;
     public float sprintDelay = 0.75f;
     public bool sprinting = false;
+    public Animator animator;
 
     private PlayerInput playerInput;
 
@@ -76,12 +77,14 @@ public class Char_Controller : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-
+            
             punching = true;
+       
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             punching = false;
+            
         }
     }
 
@@ -90,6 +93,7 @@ public class Char_Controller : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             heavyPunching = true;
+            
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -128,8 +132,7 @@ public class Char_Controller : MonoBehaviour
 
     private void Update()
     {
-
-
+        
         if (Timer * 2 < currentDelay) newDirection = Vector2.zero;
         else newDirection = moveDirection;
 
@@ -141,26 +144,34 @@ public class Char_Controller : MonoBehaviour
 
         if (!sprinting && newDirection == Vector2.zero)
         {
+            
             if (punching)
             {
+                
                 if (!attacking && Timer > currentDelay)
+
                 {
                     Timer = 0.0f;
                     currentDelay = punchDelay;
                     punchBox.SetActive(true);
                     attacking = true;
                     punching = true;
+                    animator.SetTrigger("Punch");
+                    
                 }
             }
             else if (heavyPunching)
             {
                 if (!attacking && Timer > currentDelay)
                 {
+                
                     Timer = 0.0f;
                     currentDelay = heavyPunchDelay;
                     heavyPunchBox.SetActive(true);
+                    animator.SetTrigger("HPunch");
                     attacking = true;
                     heavyPunching = false;
+                  
                 }
             }
             else if (kicking)

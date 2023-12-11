@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 5058503848809712373}
   - component: {fileID: 4112493821423892220}
   - component: {fileID: 2392126985280062728}
+  - component: {fileID: 1580932041035152871}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -403,6 +404,7 @@ MonoBehaviour:
   sprintTimer: 0
   sprintDelay: 0.75
   sprinting: 0
+  animator: {fileID: 1580932041035152871}
   moveDirection: {x: 0, y: 0}
   currentDelay: 0
   Timer: 0
@@ -638,6 +640,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1580932041035152871
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346195178026147766}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a33d7f6be53d684a80ff1e2b2f4dc16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4780381876792105614
 GameObject:
   m_ObjectHideFlags: 0

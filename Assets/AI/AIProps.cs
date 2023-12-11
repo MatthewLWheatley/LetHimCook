@@ -6,6 +6,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class AIProps : MonoBehaviour
 {
+    public Animator animator;
     [SerializeField] private float health = 3.0f;
     [SerializeField] private Rigidbody2D rb;
 
