@@ -383,12 +383,12 @@ public class AIProps : MonoBehaviour
             if (directionToTarget.x > 0)
             {
                 // Target is to the right, face right
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), 0.25f, transform.localScale.z);
             }
             else if (directionToTarget.x < 0)
             {
                 // Target is to the left, face left
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), 0.25f, transform.localScale.z);
             }
             // If the target is directly above or below, the AI will maintain its current orientation
         }

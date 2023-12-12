@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-C:\Users\Matty\Documents\Quest2Test\LetHimCook
-=======
-C:\Users\b011255k\Documents\GitHub\LetHimCook
->>>>>>> origin/Fin-Stuff
