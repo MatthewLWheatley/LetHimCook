@@ -6,6 +6,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class AIProps : MonoBehaviour
 {
+    public Animator animator;
     [SerializeField] private float health = 3.0f;
     [SerializeField] private Rigidbody2D rb;
 
@@ -292,7 +293,7 @@ public class AIProps : MonoBehaviour
         else
         {
             damageTimer = 0;
-            this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             takingDamage = false;
         }
     }

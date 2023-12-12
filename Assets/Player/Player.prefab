@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771889659718880660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.205, y: -0.127, z: -0.0001}
+  m_LocalPosition: {x: 0.425, y: -0.287, z: -0.0001}
   m_LocalScale: {x: 0.51290697, y: 0.3637875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -172,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3060911741716119279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.208, y: -0.189, z: -0.0001}
+  m_LocalPosition: {x: 0.368, y: -0.406, z: -0.0001}
   m_LocalScale: {x: 0.5372501, y: 0.11104342, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 5058503848809712373}
   - component: {fileID: 4112493821423892220}
   - component: {fileID: 2392126985280062728}
+  - component: {fileID: 1580932041035152871}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -371,9 +372,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dd01c134334c8fc44970d6fac196b6db, type: 3}
-  m_Color: {r: 0.6431373, g: 0, b: 0.2601386, a: 1}
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 8e96a38871ce53b49a29289bb7272156, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -403,6 +404,7 @@ MonoBehaviour:
   sprintTimer: 0
   sprintDelay: 0.75
   sprinting: 0
+  animator: {fileID: 1580932041035152871}
   moveDirection: {x: 0, y: 0}
   currentDelay: 0
   Timer: 0
@@ -438,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 515b844dc1495e343b22ee885a29eae9, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 201834837fe10574cacb61963e7ea950, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -465,8 +467,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 170da688-57b0-44f2-ac10-08ece2fe36f6
-    m_ActionName: Player/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionId: 52723287-2c3b-4af4-b4e5-52a4d9396b23
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5436829198899982537}
@@ -481,40 +483,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: fdce36c7-4407-4e7d-bd64-bab7b3f53b53
-    m_ActionName: Player/Sprint[/XInputControllerWindows/rightTrigger,/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5436829198899982537}
-        m_TargetAssemblyTypeName: Char_Controller, Assembly-CSharp
-        m_MethodName: OnPunch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f22d9738-bd09-4ff7-9389-486de194dfa7
-    m_ActionName: Player/Punch[/XInputControllerWindows/buttonSouth,/Keyboard/u]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5436829198899982537}
-        m_TargetAssemblyTypeName: Char_Controller, Assembly-CSharp
-        m_MethodName: OnHeavyPunch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 51314b72-f296-461f-9fd1-8e442484f7ab
-    m_ActionName: Player/HeavyPunch[/XInputControllerWindows/buttonEast,/Keyboard/i]
+    m_ActionId: 1d1b3e25-9239-479b-b347-b59a95b01569
+    m_ActionName: Player/Sprint[/Keyboard/l]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5436829198899982537}
@@ -529,9 +499,40 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: da15e8ae-499d-4af6-afa0-7034981e3f6f
-    m_ActionName: Player/Kick[/Keyboard/j,/Bensussen Deutsch & Associates,Inc.(BDA)
-      Core (Plus) Wired Controller/trigger]
+    m_ActionId: 28b5ea72-cd33-4a3c-928e-8d455297ce35
+    m_ActionName: Player/Kick[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5436829198899982537}
+        m_TargetAssemblyTypeName: Char_Controller, Assembly-CSharp
+        m_MethodName: OnPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2a852366-3659-435a-b126-835251cd1006
+    m_ActionName: Player/Punch[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5436829198899982537}
+        m_TargetAssemblyTypeName: Char_Controller, Assembly-CSharp
+        m_MethodName: OnHeavyPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5aa654aa-c67d-4ae2-9a6c-6516cc9ed9d0
+    m_ActionName: Player/HeavyPunch[/Keyboard/i]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5436829198899982537}
@@ -546,9 +547,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: e0f5e166-72c6-4ded-8ddc-ccff09b868e7
-    m_ActionName: Player/HeavyKick[/Keyboard/k,/Bensussen Deutsch & Associates,Inc.(BDA)
-      Core (Plus) Wired Controller/button4]
+    m_ActionId: 40b025bb-6d49-49ea-bb8c-dca01565fd1d
+    m_ActionName: Player/HeavyKick[/Keyboard/k]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5436829198899982537}
@@ -563,9 +563,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 3aeefeb1-fb34-43fd-961c-8aab0d0e1dbc
-    m_ActionName: Player/Interact[/Keyboard/o,/Bensussen Deutsch & Associates,Inc.(BDA)
-      Core (Plus) Wired Controller/button7]
+    m_ActionId: e41314bf-a8a9-414f-8125-c84e9b06804a
+    m_ActionName: Player/Interact[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -643,6 +642,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1580932041035152871
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346195178026147766}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a33d7f6be53d684a80ff1e2b2f4dc16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4780381876792105614
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4780381876792105614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3072, y: 0.0752, z: -0.0001}
+  m_LocalPosition: {x: 0.523, y: -0.117, z: -0.0001}
   m_LocalScale: {x: 0.51290697, y: 0.3637875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -958,7 +978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9133508180764121295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3193, y: 0.0655, z: -0.0001}
+  m_LocalPosition: {x: 0.412, y: -0.091, z: -0.0001}
   m_LocalScale: {x: 0.5372501, y: 0.11104342, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
