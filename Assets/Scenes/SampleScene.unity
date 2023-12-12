@@ -1194,7 +1194,7 @@ EdgeCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1792
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1717,7 +1717,7 @@ GameObject:
   - component: {fileID: 1414584064}
   - component: {fileID: 1414584066}
   - component: {fileID: 1414584065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cameraSprite
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2048,7 +2048,7 @@ GameObject:
   - component: {fileID: 1524295451}
   - component: {fileID: 1524295450}
   - component: {fileID: 1524295449}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FrameLock
   m_TagString: Untagged
   m_Icon: {fileID: 0}

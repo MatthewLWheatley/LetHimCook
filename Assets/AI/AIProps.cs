@@ -175,8 +175,8 @@ public class AIProps : MonoBehaviour
             float yStep = ySpeed * Time.deltaTime;
 
 
-            Vector3 leftOffset = new Vector3(-(floatingDistantce * 1.25f), 0, 0);
-            Vector3 rightOffset = new Vector3(floatingDistantce * 1.25f, 0, 0);
+            Vector3 leftOffset = new Vector3(-(floatingDistantce * 1f), 0, 0);
+            Vector3 rightOffset = new Vector3(floatingDistantce * 1f, 0, 0);
 
             bool isLeftOccupied = IsOtherAICloseToTargetOnSide(leftOffset);
             bool isRightOccupied = IsOtherAICloseToTargetOnSide(rightOffset);
@@ -241,6 +241,7 @@ public class AIProps : MonoBehaviour
                 attackTimer = 0.0f;
 
                 // Activate punch boxes here
+                animator.SetTrigger("Punch");
                 PunchBox.gameObject.SetActive(true);
             }
             if (isAttacking && attackTimer >= attackDuration)
@@ -383,12 +384,12 @@ public class AIProps : MonoBehaviour
             if (directionToTarget.x > 0)
             {
                 // Target is to the right, face right
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), 0.25f, transform.localScale.z);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
             else if (directionToTarget.x < 0)
             {
                 // Target is to the left, face left
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), 0.25f, transform.localScale.z);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
             // If the target is directly above or below, the AI will maintain its current orientation
         }

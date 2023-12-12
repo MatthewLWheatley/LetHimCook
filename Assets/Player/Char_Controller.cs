@@ -5,11 +5,15 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement; // Include this namespace
+using UnityEngine.UI;
 
 public class Char_Controller : MonoBehaviour
 {
     public Rigidbody2D rb;
 
+    public GameObject healthBar;
+
+    public float playerNumber = 1;
 
     public float walkSpeedX = 5.0f;
     public float walkSpeedY = 2.5f;
@@ -32,6 +36,17 @@ public class Char_Controller : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        var players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length > 1) 
+        {
+            playerNumber = 2;
+        }
+        if (playerNumber == 2) 
+        {
+            var scale = healthBar.transform.position;
+            healthBar.transform.position = new Vector3(scale.x,scale.y -50,scale.z);
+        }
+        healthBar.GetComponent<HealthBar>().setHealth(health);
     }
 
     public float currentDelay = 0.0f;
@@ -142,6 +157,7 @@ public class Char_Controller : MonoBehaviour
 
     private void Update()
     {
+        healthBar.GetComponent<HealthBar>().setHealth(health);
         if (health <= 0)
         {
             // Get the current scene's name
@@ -260,12 +276,12 @@ public class Char_Controller : MonoBehaviour
         if (takingDamage && damageTimer < damageDuration)
         {
             damageTimer += Time.deltaTime;
-            this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            this.gameObject.GetComponent<SpriteRenderer>().color = damageColor;
         }
         else
         {
             damageTimer = 0;
-            this.gameObject.GetComponent<SpriteRenderer>().color = damageColor;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             takingDamage = false;
         }
     }
