@@ -221,7 +221,7 @@ public class AIProps : MonoBehaviour
         else 
         {
             damageTimer = 0;
-            this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             takingDamage = false;
         }
     }
