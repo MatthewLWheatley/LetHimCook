@@ -61,11 +61,14 @@
     <Compile Include="Assets\Player\FightManager.cs" />
     <Compile Include="Assets\Player\CameraGib.cs" />
     <Compile Include="Assets\AI\AIState.cs" />
+    <Compile Include="Assets\projectilee.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Player\Char_Controller.cs" />
     <Compile Include="Assets\Player\PlayerPunchHitBox.cs" />
+    <Compile Include="Assets\projectile.cs" />
     <Compile Include="Assets\Player\scaleBoarder.cs" />
     <Compile Include="Assets\Player\PlayerHitBox.cs" />
+    <Compile Include="Assets\AiProps2.cs" />
     <Compile Include="Assets\AI\AIProps.cs" />
     <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\EnemyHitReg.cs" />

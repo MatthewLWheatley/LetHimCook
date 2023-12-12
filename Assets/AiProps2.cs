@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 
-public class AIProps : MonoBehaviour
+public class AIProps2 : MonoBehaviour
 {
     public Animator animator;
     [SerializeField] private float health = 3.0f;
@@ -63,6 +63,10 @@ public class AIProps : MonoBehaviour
     [SerializeField] private float floatingRegion = 0.5f;
 
     public GameObject[] allAIs;
+
+    public GameObject projectPrefab; 
+
+    public GameObject[] project;
 
     private void FindPlayers()
     {
@@ -168,7 +172,7 @@ public class AIProps : MonoBehaviour
                 }
             }
         }
-        if (state == 1) 
+        if (state == 1)
         {
             float xStep = xSpeed * Time.deltaTime;
             float yStep = ySpeed * Time.deltaTime;
@@ -240,12 +244,11 @@ public class AIProps : MonoBehaviour
                 attackTimer = 0.0f;
 
                 // Activate punch boxes here
-                animator.SetTrigger("Punch");
-                PunchBox.gameObject.SetActive(true);
+                animator.SetTrigger("Punch"); 
             }
             if (isAttacking && attackTimer >= attackDuration)
             {
-                //Debug.Log("attack stop");
+                //Debug.Log("attack stop");vfdsgfds
                 // Stop attacking
                 isAttacking = false;
                 attackTimer = 0.0f;
@@ -271,12 +274,12 @@ public class AIProps : MonoBehaviour
                 }
             }
         }
-        if (state == 4) 
-        { 
+        if (state == 4)
+        {
             //stunned
             stunTimer += Time.deltaTime;
 
-            if (stunTimer >= stunDelay) 
+            if (stunTimer >= stunDelay)
             {
                 state = 2;
             }
